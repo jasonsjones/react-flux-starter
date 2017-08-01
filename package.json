@@ -1,7 +1,7 @@
 {
-  "name": "react-scratch",
+  "name": "react-flux-scratch",
   "version": "1.0.0",
-  "description": "A React app from scratch",
+  "description": "A React app from scratch utilizing the Flux architecture",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --hot",
