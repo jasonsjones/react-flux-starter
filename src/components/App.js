@@ -1,9 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+
 import authStore from '../stores/authStore';
 import * as authAction from '../actions/authActions';
+
 import Home from './Home';
 import Login from './Login';
+
 import css from '../styles.css';
 
 class App extends React.Component {
@@ -19,6 +22,10 @@ class App extends React.Component {
 
     componentWillMount() {
         authStore.on('change', this.updateUser);
+    }
+
+    componentWillUnmount() {
+        authStore.removeListener('change', this.updateUser);
     }
 
     updateUser() {

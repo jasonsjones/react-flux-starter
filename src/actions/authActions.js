@@ -1,7 +1,7 @@
-import authDispatcher from '../dispatcher';
+import AppDispatcher from '../dispatcher';
 
 export function authenticateUser(user) {
-    authDispatcher.dispatch({
+    AppDispatcher.handleAction({
         actionType: "AUTHENTICATE_USER",
         data: user
     });

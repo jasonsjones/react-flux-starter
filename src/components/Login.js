@@ -1,13 +1,17 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+
 import * as authAction from '../actions/authActions';
 
 const LoginForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <input type='text'/>
+            <label htmlFor='email'>Email</label>
+            <input type='text' id="email"/>
             <br/>
-            <input type='password'/>
+            <label htmlFor='password'>Password</label>
+            <input type='password' id='password'/>
+            <br/>
             <button type='submit'>Login</button>
         </form>
     );
