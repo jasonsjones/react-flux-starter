@@ -3,18 +3,26 @@ import { Redirect } from 'react-router-dom';
 
 import * as authAction from '../actions/authActions';
 
+const styles = {
+    loginform: {
+        display: 'flex'
+    },
+    loginButton: {
+        width: 50,
+        height: 30,
+        backgroundColor: "#ccc"
+    }
+};
 const LoginForm = (props) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form style={styles.loginform} onSubmit={props.handleSubmit}>
             <label htmlFor='email'>Email</label>
             <input type='text' id="email" name="email"
               value={props.value.email} onChange={props.handleChange}/>
-            <br/>
             <label htmlFor='password'>Password</label>
             <input type='password' id='password' name="password"
               value={props.value.password} onChange={props.handleChange}/>
-            <br/>
-            <button type='submit'>Login</button>
+            <button type='submit' style={styles.loginButton}>Login</button>
         </form>
     );
 }
