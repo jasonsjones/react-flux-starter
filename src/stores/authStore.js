@@ -5,6 +5,18 @@ class AuthStore extends EventEmitter {
     constructor() {
         super();
         this.currentUser = null
+        this.users = [
+            {
+                name: 'Oliver Queen',
+                email: 'oliver@qc.com',
+                password: 'arrow'
+            },
+            {
+                name: 'John Diggle',
+                email: 'dig@qc.com',
+                password: 'spartan'
+            }
+        ]
     }
 
     getCurrentUser() {
@@ -13,9 +25,13 @@ class AuthStore extends EventEmitter {
 
     authenticateUser(user) {
         // simulate back-end server call to authenticate user
-        if (user.password == 'arrow') {
+        let theUser = this.users.find(function (u) {
+            return (u.email === user.email) && (u.password === user.password);
+        });
+        if (theUser) {
             this.currentUser = {
-                name: user.name
+                name: theUser.name,
+                email: theUser.email
             };
             // this is a good place to store the token (if sent from server)
             // and current user data in local or session storage
