@@ -13,7 +13,8 @@ class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            currentUser: authStore.getCurrentUser()
+            currentUser: authStore.getCurrentUser(),
+            token: authStore.getToken()
         };
 
         this.isUserAuthenticated = this.isUserAuthenticated.bind(this);
@@ -35,7 +36,7 @@ class App extends React.Component {
     }
 
     isUserAuthenticated() {
-        return !!this.state.currentUser;
+        return !!this.state.token;
     }
 
     render() {

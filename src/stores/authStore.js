@@ -4,7 +4,11 @@ import AppDispatcher from '../dispatcher';
 class AuthStore extends EventEmitter {
     constructor() {
         super();
-        this.currentUser = null
+
+        this.currentUser = null;
+        this.token = null;
+
+        // temp user list
         this.users = [
             {
                 name: 'Oliver Queen',
@@ -16,11 +20,23 @@ class AuthStore extends EventEmitter {
                 email: 'dig@qc.com',
                 password: 'spartan'
             }
-        ]
+        ];
     }
 
     getCurrentUser() {
+        let user = localStorage.getItem('currentUser');
+        if (user) {
+            this.currentUser = JSON.parse(user);
+        }
         return this.currentUser;
+    }
+
+    getToken() {
+        let userToken = localStorage.getItem('userToken');
+        if (userToken) {
+            this.token = userToken;
+        }
+        return this.token;
     }
 
     authenticateUser(user) {
@@ -33,8 +49,11 @@ class AuthStore extends EventEmitter {
                 name: theUser.name,
                 email: theUser.email
             };
+            this.token = 'jwt.token.fromServer';
             // this is a good place to store the token (if sent from server)
             // and current user data in local or session storage
+            localStorage.setItem('userToken', this.token);
+            localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
             this.emit('change');
         }
     }
