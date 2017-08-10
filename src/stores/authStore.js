@@ -7,6 +7,7 @@ class AuthStore extends EventEmitter {
 
         this.currentUser = null;
         this.token = null;
+        this.errorMsg = '';
 
         // temp user list
         this.users = [
@@ -39,12 +40,17 @@ class AuthStore extends EventEmitter {
         return this.token;
     }
 
+    getErrorMessage() {
+        return this.errorMsg;
+    }
+
     authenticateUser(user) {
         // simulate back-end server call to authenticate user
         let theUser = this.users.find(function (u) {
             return (u.email === user.email) && (u.password === user.password);
         });
         if (theUser) {
+            this.errorMsg = ''
             this.currentUser = {
                 name: theUser.name,
                 email: theUser.email
@@ -54,8 +60,10 @@ class AuthStore extends EventEmitter {
             // and current user data in local or session storage
             localStorage.setItem('userToken', this.token);
             localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-            this.emit('change');
+        } else {
+            this.errorMsg = 'Oooops...Email and/or password is invalid';
         }
+        this.emit('change');
     }
 
     handleActions(action) {

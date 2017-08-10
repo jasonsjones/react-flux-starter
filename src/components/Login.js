@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+import authStore from '../stores/authStore';
 import * as authAction from '../actions/authActions';
 
 const styles = {
@@ -11,8 +12,12 @@ const styles = {
         width: 50,
         height: 30,
         backgroundColor: "#ccc"
+    },
+    error: {
+        color: 'red'
     }
 };
+
 const LoginForm = (props) => {
     return (
         <form style={styles.loginform} onSubmit={props.handleSubmit}>
@@ -32,10 +37,21 @@ export default class Login extends React.Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            errorMsg: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+
+        this.updateErrorMsg = this.updateErrorMsg.bind(this);
+    }
+
+    componentWillMount() {
+        authStore.on('change', this.updateErrorMsg);
+    }
+
+    componentWillUnmount() {
+        authStore.removeListener('change', this.updateErrorMsg);
     }
 
     handleChange(e) {
@@ -46,9 +62,14 @@ export default class Login extends React.Component {
         });
     }
 
+    updateErrorMsg() {
+        this.setState({
+            errorMsg: authStore.getErrorMessage()
+        });
+    }
+
     resetForm() {
         this.setState({
-            email: '',
             password: ''
         });
     }
@@ -63,6 +84,10 @@ export default class Login extends React.Component {
     }
 
     render() {
+        let errorText = null;
+        if (this.state.errorMsg) {
+            errorText = <p style={styles.error}>{this.state.errorMsg}</p>
+        }
         return (
             this.props.isAuthenticated ? (
                 <Redirect to='/'/>
@@ -72,6 +97,7 @@ export default class Login extends React.Component {
                 <LoginForm handleSubmit={this.handleSubmit}
                            handleChange={this.handleChange}
                            value={this.state} />
+                {errorText}
             </div>
             )
         );
