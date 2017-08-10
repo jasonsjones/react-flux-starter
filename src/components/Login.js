@@ -6,28 +6,28 @@ import * as authAction from '../actions/authActions';
 
 const styles = {
     loginform: {
-        display: 'flex'
-    },
-    loginButton: {
-        width: 50,
-        height: 30,
-        backgroundColor: "#ccc"
-    },
-    error: {
-        color: 'red'
+        width: 350
     }
 };
 
 const LoginForm = (props) => {
     return (
-        <form style={styles.loginform} onSubmit={props.handleSubmit}>
-            <label htmlFor='email'>Email</label>
-            <input type='text' id="email" name="email"
-              value={props.value.email} onChange={props.handleChange}/>
-            <label htmlFor='password'>Password</label>
-            <input type='password' id='password' name="password"
-              value={props.value.password} onChange={props.handleChange}/>
-            <button type='submit' style={styles.loginButton}>Login</button>
+        <form className="slds-form slds-form_stacked" style={styles.loginform} onSubmit={props.handleSubmit}>
+            <div className="slds-form-element">
+                <label className="slds-form-element__label" htmlFor='email'>Email</label>
+                <div className="slds-form-control__control">
+                    <input className="slds-input" type='text' id="email" name="email"
+                    value={props.value.email} onChange={props.handleChange}/>
+                </div>
+            </div>
+            <div className="slds-form-element slds-m-top_medium">
+                <label htmlFor='password'>Password</label>
+                <div className="slds-form-control__control">
+                    <input className="slds-input" type='password' id='password' name="password"
+                    value={props.value.password} onChange={props.handleChange}/>
+                </div>
+            </div>
+            <button type='submit' className="slds-button slds-button_brand slds-m-top_medium">Login</button>
         </form>
     );
 }
@@ -86,14 +86,16 @@ export default class Login extends React.Component {
     render() {
         let errorText = null;
         if (this.state.errorMsg) {
-            errorText = <p style={styles.error}>{this.state.errorMsg}</p>
+            errorText = <p className="slds-text-color_error slds-text-heading_small slds-m-top_medium">
+                            {this.state.errorMsg}
+                        </p>
         }
         return (
             this.props.isAuthenticated ? (
                 <Redirect to='/'/>
             ) : (
             <div>
-                <h1>Login</h1>
+                <h1 className="slds-text-heading_large">Login</h1>
                 <LoginForm handleSubmit={this.handleSubmit}
                            handleChange={this.handleChange}
                            value={this.state} />
