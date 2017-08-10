@@ -31,7 +31,8 @@ class App extends React.Component {
 
     updateUser() {
         this.setState({
-            currentUser: authStore.getCurrentUser()
+            currentUser: authStore.getCurrentUser(),
+            token: authStore.getToken()
         }); 
     }
 
