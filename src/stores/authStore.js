@@ -66,12 +66,23 @@ class AuthStore extends EventEmitter {
         this.emit('change');
     }
 
+    logoutUser(user) {
+        localStorage.removeItem('userToken');
+        localStorage.removeItem('currentUser');
+        this.token = '';
+        this.currentUser = {};
+        this.emit('change');
+    }
+
     handleActions(action) {
         let payload = action.action;
         switch(payload.actionType) {
             case 'AUTHENTICATE_USER':
                 this.authenticateUser(payload.data);
                 break;
+
+            case 'LOGOUT_USER':
+                this.logoutUser(payload.data);
             default:
         }
     }

@@ -6,3 +6,10 @@ export function authenticateUser(user) {
         data: user
     });
 }
+
+export function logoutUser(user) {
+    AppDispatcher.handleAction({
+        actionType: "LOGOUT_USER",
+        data: user
+    });
+}
