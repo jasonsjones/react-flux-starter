@@ -41,18 +41,24 @@ class App extends React.Component {
     }
 
     render() {
+        let user = this.state.currentUser;
+        let isAuthenticated = this.isUserAuthenticated();
         return (
             <BrowserRouter>
                 <div className="container">
                     <Route exact path='/' render={() => (
-                        this.isUserAuthenticated() ? (
-                            <Home user={this.state.currentUser}/>
+                        isAuthenticated ? (
+                            <Home user={user}/>
                         ) : (
                             <Redirect to='/login'/>
                         )
                     )} />
                     <Route path='/login' render={() => (
+                        isAuthenticated ? (
+                            <Redirect to='/'/>
+                        ) : (
                         <Login isAuthenticated={this.isUserAuthenticated()} />
+                        )
                     )}/>
                 </div>
             </BrowserRouter>

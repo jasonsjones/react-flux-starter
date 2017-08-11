@@ -12,7 +12,7 @@ const styles = {
 
 const LoginForm = (props) => {
     return (
-        <form className="slds-form slds-form_stacked" style={styles.loginform} onSubmit={props.handleSubmit}>
+        <form className="slds-form slds-form_stacked" onSubmit={props.handleSubmit}>
             <div className="slds-form-element">
                 <label className="slds-form-element__label" htmlFor='email'>Email</label>
                 <div className="slds-form-control__control">
@@ -91,17 +91,13 @@ export default class Login extends React.Component {
                         </p>
         }
         return (
-            this.props.isAuthenticated ? (
-                <Redirect to='/'/>
-            ) : (
-            <div>
+            <div style={styles.loginform}>
                 <h1 className="slds-text-heading_large">Login</h1>
                 <LoginForm handleSubmit={this.handleSubmit}
                            handleChange={this.handleChange}
                            value={this.state} />
                 {errorText}
             </div>
-            )
         );
     }
 }
