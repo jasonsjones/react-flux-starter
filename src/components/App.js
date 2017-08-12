@@ -57,7 +57,7 @@ class App extends React.Component {
                         isAuthenticated ? (
                             <Redirect to='/'/>
                         ) : (
-                        <Login isAuthenticated={this.isUserAuthenticated()} />
+                            <Login isAuthenticated={this.isUserAuthenticated()} />
                         )
                     )}/>
                 </div>
