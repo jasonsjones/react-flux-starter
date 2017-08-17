@@ -4,8 +4,8 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import authStore from '../stores/authStore';
 import * as authAction from '../actions/authActions';
 
-import Home from './Home';
-import Login from './Login';
+import HomePage from './HomePage';
+import LoginPage from './LoginPage';
 
 import css from '../styles.css';
 
@@ -48,7 +48,7 @@ class App extends React.Component {
                 <div className="container">
                     <Route exact path='/' render={() => (
                         isAuthenticated ? (
-                            <Home user={user}/>
+                            <HomePage user={user}/>
                         ) : (
                             <Redirect to='/login'/>
                         )
@@ -57,7 +57,7 @@ class App extends React.Component {
                         isAuthenticated ? (
                             <Redirect to='/'/>
                         ) : (
-                            <Login isAuthenticated={this.isUserAuthenticated()} />
+                            <LoginPage isAuthenticated={this.isUserAuthenticated()} />
                         )
                     )}/>
                 </div>
