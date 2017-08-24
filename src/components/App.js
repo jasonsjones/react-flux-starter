@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
 import authStore from '../stores/authStore';
-import * as authAction from '../actions/authActions';
 
 import HomePage from './HomePage';
 import LoginPage from './LoginPage';
