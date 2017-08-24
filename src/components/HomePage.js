@@ -1,6 +1,6 @@
 import React from 'react';
 
-import authStore from '../stores/authStore';
+import * as authAction from '../actions/authActions';
 
 class Home extends React.Component {
     constructor(props) {
@@ -9,7 +9,7 @@ class Home extends React.Component {
     }
 
     handleClick() {
-        authStore.logoutUser(this.props.user);
+        authAction.logoutUser(this.props.user);
     }
 
     render() {
