@@ -1,9 +1,16 @@
 import { Dispatcher } from 'flux';
 const AppDispatcher = new Dispatcher();
 
-AppDispatcher.handleAction = function (action) {
+AppDispatcher.handleViewAction = function (action) {
     this.dispatch({
         source: 'VIEW_ACTION',
+        action: action
+    });
+}
+
+AppDispatcher.handleServerAction = function (action) {
+    this.dispatch({
+        source: 'SERVER_ACTION',
         action: action
     });
 }
