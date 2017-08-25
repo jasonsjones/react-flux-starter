@@ -10,23 +10,25 @@ const styles = {
     }
 };
 
+const InputElement = (props) => {
+    return (
+        <div className="slds-form-element slds-m-top_medium">
+            <label className="slds-form-element__label" htmlFor={props.name}>{props.label}</label>
+            <div className="slds-form-control__control">
+                <input className="slds-input" type={props.type} id={props.name} name={props.name}
+                value={props.value} onChange={props.handleChange}/>
+            </div>
+        </div>
+    );
+}
+
 const LoginForm = (props) => {
     return (
         <form className="slds-form slds-form_stacked" onSubmit={props.handleSubmit}>
-            <div className="slds-form-element">
-                <label className="slds-form-element__label" htmlFor='email'>Email</label>
-                <div className="slds-form-control__control">
-                    <input className="slds-input" type='text' id="email" name="email"
-                    value={props.value.email} onChange={props.handleChange}/>
-                </div>
-            </div>
-            <div className="slds-form-element slds-m-top_medium">
-                <label htmlFor='password'>Password</label>
-                <div className="slds-form-control__control">
-                    <input className="slds-input" type='password' id='password' name="password"
-                    value={props.value.password} onChange={props.handleChange}/>
-                </div>
-            </div>
+            <InputElement type="text" name="email" label="Email"
+                value={props.value.email} handleChange={props.handleChange} />
+            <InputElement type="password" name="password" label="Password"
+                value={props.value.password} handleChange={props.handleChange} />
             <button type='submit' className="slds-button slds-button_brand slds-m-top_medium">Login</button>
         </form>
     );
@@ -40,9 +42,9 @@ export default class Login extends React.Component {
             password: '',
             errorMsg: ''
         };
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-
         this.updateErrorMsg = this.updateErrorMsg.bind(this);
     }
 
