@@ -24,6 +24,18 @@ class AuthStore extends EventEmitter {
         ];
     }
 
+    addChangeListenter(callback) {
+        this.on('change', callback);
+    }
+
+    removeChangeListener(callback) {
+        this.removeListener('change', callback);
+    }
+
+    emitChange() {
+        this.emit('change');
+    }
+
     getCurrentUser() {
         let user = localStorage.getItem('currentUser');
         if (user) {
@@ -63,7 +75,7 @@ class AuthStore extends EventEmitter {
         } else {
             this.errorMsg = 'Oooops...Email and/or password is invalid';
         }
-        this.emit('change');
+        this.emitChange();
     }
 
     logoutUser(user) {
@@ -71,7 +83,7 @@ class AuthStore extends EventEmitter {
         localStorage.removeItem('currentUser');
         this.token = '';
         this.currentUser = {};
-        this.emit('change');
+        this.emitChange();
     }
 
     handleActions(action) {

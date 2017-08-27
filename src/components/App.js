@@ -21,11 +21,13 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        authStore.on('change', this.updateUser);
+        authStore.addChangeListenter(this.updateUser);
+        // authStore.on('change', this.updateUser);
     }
 
     componentWillUnmount() {
-        authStore.removeListener('change', this.updateUser);
+        authStore.removeChangeListener(this.updateUser);
+        // authStore.removeListener('change', this.updateUser);
     }
 
     updateUser() {
