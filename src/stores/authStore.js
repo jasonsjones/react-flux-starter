@@ -9,19 +9,6 @@ class AuthStore extends EventEmitter {
         this.token = null;
         this.errorMsg = '';
 
-        // temp user list
-        this.users = [
-            {
-                name: 'Oliver Queen',
-                email: 'oliver@qc.com',
-                password: 'arrow'
-            },
-            {
-                name: 'John Diggle',
-                email: 'dig@qc.com',
-                password: 'spartan'
-            }
-        ];
     }
 
     addChangeListenter(callback) {
@@ -56,25 +43,18 @@ class AuthStore extends EventEmitter {
         return this.errorMsg;
     }
 
-    authenticateUser(user) {
-        // simulate back-end server call to authenticate user
-        let theUser = this.users.find(function (u) {
-            return (u.email === user.email) && (u.password === user.password);
-        });
-        if (theUser) {
-            this.errorMsg = ''
-            this.currentUser = {
-                name: theUser.name,
-                email: theUser.email
-            };
-            this.token = 'jwt.token.fromServer';
-            // this is a good place to store the token (if sent from server)
-            // and current user data in local or session storage
-            localStorage.setItem('userToken', this.token);
-            localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-        } else {
-            this.errorMsg = 'Oooops...Email and/or password is invalid';
-        }
+    authenticateUser(data) {
+        this.currentUser = data.user;
+        this.token = data.token;
+        // this is a good place to store the token (if sent from server)
+        // and current user data in local or session storage
+        localStorage.setItem('userToken', this.token);
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        this.emitChange();
+    }
+
+    authenticatUserError(err) {
+        this.errorMsg = err;
         this.emitChange();
     }
 
@@ -92,9 +72,12 @@ class AuthStore extends EventEmitter {
             case 'AUTHENTICATE_USER':
                 this.authenticateUser(payload.data);
                 break;
-
             case 'LOGOUT_USER':
                 this.logoutUser(payload.data);
+                break;
+            case 'AUTHENTICATE_USER_ERROR':
+                this.authenticatUserError(payload.data);
+                break;
             default:
         }
     }
